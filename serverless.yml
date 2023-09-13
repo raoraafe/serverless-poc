@@ -1,0 +1,50 @@
+org: raoraafe
+app: serverless-crud-app
+service: serverless-crud-app
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  environment:
+    DB_HOST: db-app.c9rs9fvwrnye.us-east-1.rds.amazonaws.com
+    DB_USER: serverless
+    DB_PASSWORD: serverless
+    DB_NAME: serverless_crud_app
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  getAll:
+    handler: student/getAll.handler
+    events:
+      - httpApi:
+          path: /student
+          method: get
+  add:
+    handler: student/add.handler
+    events:
+      - httpApi:
+          path: /student
+          method: post
+  update:
+    handler: student/update.handler
+    events:
+      - httpApi:
+          path: /student
+          method: put
+  delete:
+    handler: student/delete.handler
+    events:
+      - httpApi:
+          path: /student
+          method: delete
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
